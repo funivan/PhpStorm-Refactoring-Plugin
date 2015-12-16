@@ -1,0 +1,46 @@
+<idea-plugin version="2">
+    <id>com.funivan.phpstorm.refactoring</id>
+    <name>Refactoring</name>
+    <version>0.0.1</version>
+    <vendor email="dev@yfunivan.com" url="http://funivan.com">Funivan</vendor>
+
+    <description><![CDATA[
+      Improve your productivity
+    ]]></description>
+
+    <change-notes><![CDATA[
+
+    ]]>
+    </change-notes>
+
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
+
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
+
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="CreatePatchFromUsages" class="com.funivan.phpstorm.refactoring.EditUsages.CreatePatchFromUsages"
+                text="Create patch from usages" description="Export Usages to custom patch">
+        </action>
+
+        <action id="ApplyCustomPatch" class="com.funivan.phpstorm.refactoring.EditUsages.ApplyCustomPatch"
+                text="Apply custom Patch" description="Apply custom patch file">
+        </action>
+    </actions>
+
+</idea-plugin>
