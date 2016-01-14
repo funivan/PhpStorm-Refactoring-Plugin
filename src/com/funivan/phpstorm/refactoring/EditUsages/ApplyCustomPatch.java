@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Ivan Scherbak <dev@funivan.com>
- * @todo FeatureUsageTracker.getInstance().triggerFeatureUsed("scratch"); add triggers for patch usages
+ * @todo FeatureUsageTracker.getInstance().triggerFeatureUsed("patchApply"); add triggers for patch usages
  */
 public class ApplyCustomPatch extends AnAction {
 

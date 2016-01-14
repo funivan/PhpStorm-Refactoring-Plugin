@@ -1,29 +1,21 @@
 package com.funivan.phpstorm.refactoring.EditUsages;
 
-import com.intellij.featureStatistics.FeatureUsageTracker;
 import com.intellij.ide.scratch.ScratchFileService;
 import com.intellij.ide.scratch.ScratchRootType;
 import com.intellij.lang.Language;
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.usageView.UsageInfo;
-import com.intellij.usages.*;
-import com.intellij.usages.impl.UsageNode;
-import com.intellij.usages.impl.UsageViewImpl;
 import com.intellij.usages.Usage;
-import com.intellij.usages.impl.UsageViewManagerImpl;
-import com.intellij.util.SystemProperties;
+import com.intellij.usages.UsageInfo2UsageAdapter;
+import com.intellij.usages.UsageView;
+import com.intellij.usages.impl.UsageViewImpl;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.*;
-import javax.swing.tree.TreePath;
-import java.util.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ivan Scherbak <dev@funivan.com>
