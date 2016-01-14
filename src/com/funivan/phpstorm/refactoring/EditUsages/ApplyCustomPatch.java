@@ -9,6 +9,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
@@ -53,7 +54,7 @@ public class ApplyCustomPatch extends AnAction {
 
         String[] lines = text.split("//file:");
 
-        Pattern pattern = Pattern.compile("^([^\n]+):(\\d+):(\\d+)\n(.+)$", Pattern.DOTALL);
+        Pattern pattern = Pattern.compile("^([^\n]+):(\\d+)\n(.+)$", Pattern.DOTALL);
 
         Map<String, DocumentReplaces> documentsForChange = new HashMap<String, DocumentReplaces>();
 
@@ -74,12 +75,12 @@ public class ApplyCustomPatch extends AnAction {
                 continue;
             }
 
-            int startOffset = Integer.parseInt(match.group(2));
-            int endOffset = Integer.parseInt(match.group(3));
+            int lineNumber = (Integer.parseInt(match.group(2)) - 1);
 
-            String value = match.group(4);
 
-            value = value.replaceAll("\n\n$", "");
+            String value = match.group(3);
+
+            value = value.replaceAll("\n+$", "");
             System.out.println(value);
 
             com.intellij.openapi.editor.Document fileDocument = FileDocumentManager.getInstance().getDocument(file);
@@ -95,7 +96,7 @@ public class ApplyCustomPatch extends AnAction {
                 documentsForChange.put(filePath, replaceStructure);
             }
 
-            replaceStructure.add(new ReplaceStructure(value, startOffset, endOffset));
+            replaceStructure.add(new ReplaceStructure(value, lineNumber));
 
         }
 
@@ -116,8 +117,13 @@ public class ApplyCustomPatch extends AnAction {
                             // So sort them by start position
                             Collections.sort(replaces, new ReplacesItemsmComparator());
 
+                            Document document = doc.getDocument();
+
                             for (ReplaceStructure r : replaces) {
-                                doc.getDocument().replaceString(r.getStart(), r.getEnd(), r.getValue());
+                                int startOffset = document.getLineStartOffset(r.getLine());
+                                int endOffset = document.getLineEndOffset(r.getLine());
+
+                                document.replaceString(startOffset, endOffset, r.getValue());
                                 items++;
                             }
                             files++;

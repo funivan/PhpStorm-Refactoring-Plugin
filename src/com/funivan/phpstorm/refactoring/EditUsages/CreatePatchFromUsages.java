@@ -26,9 +26,8 @@ import java.util.*;
 import java.util.List;
 
 /**
+ * @author Ivan Scherbak <dev@funivan.com>
  * @todo better position detector
- *
- * @author  Ivan Scherbak <dev@funivan.com>
  */
 public class CreatePatchFromUsages extends AnAction {
     public void actionPerformed(AnActionEvent e) {
@@ -66,17 +65,13 @@ public class CreatePatchFromUsages extends AnAction {
                 language = usageInfo.getElement().getLanguage();
             }
 
-
-            PsiElement parent = usageInfo.getElement().getParent();
-            TextRange textRange = parent.getTextRange();
-
             VirtualFile file = usageInfo.getFile();
 
             String path = VfsUtil.getRelativePath(file, baseDir, '/');
 
             buf.append("\n");
-            buf.append("//file:" + path + ':' + textRange.getStartOffset() + ":" + textRange.getEndOffset() + "\n");
-            buf.append(parent.getText() + "\n");
+            buf.append("//file:" + path + ':' + (usageInfo.getLine() + 1) + "\n");
+            buf.append(usageInfo.getPlainText() + "\n");
             buf.append("\n");
         }
 

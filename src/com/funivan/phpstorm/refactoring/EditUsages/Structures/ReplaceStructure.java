@@ -5,22 +5,19 @@ package com.funivan.phpstorm.refactoring.EditUsages.Structures;
  */
 public class ReplaceStructure {
     private String value;
-    private int start;
-    private int end;
+    private int line;
 
-    public ReplaceStructure(String value, int start, int end) {
+
+    public ReplaceStructure(String value, int line) {
         this.value = value;
-        this.start = start;
-        this.end = end;
+        this.line = line;
+
     }
 
-    public int getStart() {
-        return start;
+    public int getLine() {
+        return line;
     }
 
-    public int getEnd() {
-        return end;
-    }
 
     public String getValue() {
         return value;
