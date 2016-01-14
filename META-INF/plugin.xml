@@ -34,12 +34,12 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="CreatePatchFromUsages" class="com.funivan.phpstorm.refactoring.EditUsages.CreatePatchFromUsages"
-                text="Create patch from usages" description="Export Usages to custom patch">
+        <action id="CreatePatchFromUsages" class="com.funivan.phpstorm.refactoring.EditUsages.CreateCustomPatchFromUsages"
+                text="Create custom patch from usages" description="Export Usages to custom patch">
         </action>
 
         <action id="ApplyCustomPatch" class="com.funivan.phpstorm.refactoring.EditUsages.ApplyCustomPatch"
-                text="Apply custom Patch" description="Apply custom patch file">
+                text="Apply custom patch" description="Apply custom patch file">
         </action>
     </actions>
 

@@ -19,9 +19,8 @@ import java.util.Set;
 
 /**
  * @author Ivan Scherbak <dev@funivan.com>
- * @todo better position detector
  */
-public class CreatePatchFromUsages extends AnAction {
+public class CreateCustomPatchFromUsages extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         Project project = e.getProject();
 
