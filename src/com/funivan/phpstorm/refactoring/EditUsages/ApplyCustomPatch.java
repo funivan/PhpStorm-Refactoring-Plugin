@@ -47,10 +47,8 @@ public class ApplyCustomPatch extends AnAction {
         if (editor == null) {
             return;
         }
-        com.intellij.openapi.editor.Document document = editor.getDocument();
-        if (document == null) {
-            return;
-        }
+        Document document = editor.getDocument();
+
 
         String text = document.getText();
 
@@ -58,7 +56,7 @@ public class ApplyCustomPatch extends AnAction {
 
         Pattern pattern = Pattern.compile("^([^\n]+):(\\d+)\n(.+)$", Pattern.DOTALL);
 
-        Map<String, DocumentReplaces> documentsForChange = new HashMap<String, DocumentReplaces>();
+        Map<String, DocumentReplaces> documentsForChange = new HashMap<>();
 
         for (String line : lines) {
 
@@ -85,7 +83,7 @@ public class ApplyCustomPatch extends AnAction {
             value = value.replaceAll("\n+$", "");
             System.out.println(value);
 
-            com.intellij.openapi.editor.Document fileDocument = FileDocumentManager.getInstance().getDocument(file);
+            Document fileDocument = FileDocumentManager.getInstance().getDocument(file);
 
             if (fileDocument == null) {
                 continue;
