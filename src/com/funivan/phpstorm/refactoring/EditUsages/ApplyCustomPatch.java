@@ -23,13 +23,15 @@ import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.ui.awt.RelativePoint;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Ivan Scherbak <dev@funivan.com>
- * @todo FeatureUsageTracker.getInstance().triggerFeatureUsed("patchApply"); add triggers for patch usages
  */
 public class ApplyCustomPatch extends AnAction {
 

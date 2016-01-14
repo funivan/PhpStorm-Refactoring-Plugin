@@ -1,7 +1,7 @@
 package com.funivan.phpstorm.refactoring.EditUsages.Structures;
 
 /**
- * @author  Ivan Scherbak <dev@funivan.com>
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 public class ReplaceStructure {
     private String value;

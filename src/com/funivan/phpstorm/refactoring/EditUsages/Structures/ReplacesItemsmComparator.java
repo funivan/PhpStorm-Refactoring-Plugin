@@ -3,7 +3,7 @@ package com.funivan.phpstorm.refactoring.EditUsages.Structures;
 import java.util.Comparator;
 
 /**
- * @author  Ivan Scherbak <dev@funivan.com>
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 public class ReplacesItemsmComparator implements Comparator<ReplaceStructure> {
 
