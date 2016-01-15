@@ -1,5 +1,5 @@
 # How to
-For better perfomance set hotkeys for two action: `CreatePatchFromUsages` and `ApplyCustomPatch`
+For better performance set hotkeys for two action: `Create custom patch from usages` and `Apply custom patch`
 
 ## How to
 1. Run `find usages`
