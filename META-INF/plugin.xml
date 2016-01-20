@@ -27,6 +27,7 @@
             <className>com.funivan.phpstorm.refactoring.UnimportClass.UnimportClassIntention</className>
             <category>Php</category>
         </intentionAction>
+
     </extensions>
 
     <application-components>
@@ -46,6 +47,14 @@
         <action id="ApplyCustomPatch" class="com.funivan.phpstorm.refactoring.EditUsages.ApplyCustomPatch"
                 text="Apply custom patch" description="Apply custom patch file">
         </action>
+
+        <!-- Fins magic methods -->
+        <action id="FindMagicMethod" class="com.funivan.phpstorm.refactoring.FindMagicMethods.FindMagicMethods"
+                text="Find magic method" description="Find magic methods that are passed to this call">
+        </action>
+
     </actions>
+
+
 
 </idea-plugin>
