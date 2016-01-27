@@ -7,8 +7,10 @@ import com.intellij.usages.Usage;
 import com.intellij.usages.UsageInfo2UsageAdapter;
 import com.jetbrains.php.lang.psi.elements.Method;
 import com.jetbrains.php.lang.psi.elements.MethodReference;
+import com.jetbrains.php.lang.psi.elements.PhpClass;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,12 +19,12 @@ import java.util.List;
 
 class FindMethodRecursiveElementWalkingVisitor extends PsiRecursiveElementWalkingVisitor {
 
-    private final String searchClassFQN;
+    private final HashMap<String, PhpClass> searchClassFQN;
     private final List<Usage> usages;
     private final Boolean findStaticMethods;
 
-    public FindMethodRecursiveElementWalkingVisitor(String searchClassFQN, List<Usage> usages, Boolean findStaticMethods) {
-        this.searchClassFQN = searchClassFQN;
+    public FindMethodRecursiveElementWalkingVisitor(HashMap<String, PhpClass> searchClassesFQNs, List<Usage> usages, Boolean findStaticMethods) {
+        this.searchClassFQN = searchClassesFQNs;
         this.usages = usages;
         this.findStaticMethods = findStaticMethods;
     }
@@ -52,21 +54,12 @@ class FindMethodRecursiveElementWalkingVisitor extends PsiRecursiveElementWalkin
         }
 
 
+        //@todo get method type
         String classFqn = type.toString().replaceAll("^#M#C(.+)\\." + methodRef.getName() + ".+$", "$1");
 
-
-        if (!searchClassFQN.equals(classFqn)) {
+        if (searchClassFQN.get(classFqn) == null) {
             return;
         }
-
-
-        System.out.println("");
-        System.out.println("type");
-        System.out.println("text:" + text);
-        System.out.println("name: " + methodRef.getName());
-        System.out.println("fqn: " + classFqn);
-        System.out.println("Static: " + methodRef.isStatic());
-
 
         final UsageInfo usageInfo = new UsageInfo(reference.getElement());
         Usage usage = new UsageInfo2UsageAdapter(usageInfo);

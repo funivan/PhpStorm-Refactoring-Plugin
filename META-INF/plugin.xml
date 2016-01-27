@@ -49,7 +49,7 @@
         </action>
 
         <!-- Fins magic methods -->
-        <action id="FindMagicMethod" class="com.funivan.phpstorm.refactoring.FindMagicMethods.FindMagicMethods"
+        <action id="FindMagicMethod" class="com.funivan.phpstorm.refactoring.FindMagicMethods.FindMagicMethodsAction"
                 text="Find magic method" description="Find magic methods that are passed to this call">
         </action>
 
