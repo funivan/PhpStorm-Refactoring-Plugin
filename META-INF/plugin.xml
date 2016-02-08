@@ -6,6 +6,7 @@
 
     <description><![CDATA[
       Improve your productivity
+
     ]]></description>
 
     <change-notes><![CDATA[
@@ -41,7 +42,8 @@
     <actions>
         <!-- Add your actions here -->
         <action id="CreatePatchFromUsages" class="com.funivan.phpstorm.refactoring.EditUsages.CreateCustomPatchFromUsages"
-                text="Create custom patch from usages" description="Export Usages to custom patch">
+                text="Create custom patch" description="Export Usages to custom patch" icon="Icons.EDIT_USAGES_CREATE_PATCH" >
+            <add-to-group group-id="UsageView.Popup"/>
         </action>
 
         <action id="ApplyCustomPatch" class="com.funivan.phpstorm.refactoring.EditUsages.ApplyCustomPatch"

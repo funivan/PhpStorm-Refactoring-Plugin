@@ -11,9 +11,6 @@ import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.DumbModePermission;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
@@ -24,7 +21,6 @@ import com.intellij.usages.Usage;
 import com.intellij.usages.UsageInfo2UsageAdapter;
 import com.intellij.usages.UsageView;
 import com.intellij.usages.impl.UsageViewImpl;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +45,10 @@ public class CreateCustomPatchFromUsages extends AnAction {
             return;
         }
 
-        Set<Usage> usages = usageView.getUsages();
+        Set<Usage> usages = usageView.getSelectedUsages();
+        if (usages.size() == 0) {
+            usages = usageView.getUsages();
+        }
 
 
         VirtualFile baseDir = project.getBaseDir();
@@ -59,6 +58,8 @@ public class CreateCustomPatchFromUsages extends AnAction {
 
         Map<String, Boolean> processedLines = new HashMap<>();
 
+
+        final Set<Usage> processUsages = usages;
 
         CommandProcessor.getInstance().executeCommand(project, new Runnable() {
             @Override
@@ -71,7 +72,7 @@ public class CreateCustomPatchFromUsages extends AnAction {
                             public void run() {
                                 Language language = null;
 
-                                for (Usage usage : usages) {
+                                for (Usage usage : processUsages) {
 
                                     if (!(usage instanceof UsageInfo2UsageAdapter)) {
                                         continue;
@@ -119,7 +120,8 @@ public class CreateCustomPatchFromUsages extends AnAction {
                                 VirtualFile f = ScratchRootType.getInstance().createScratchFile(project, "scratch", language, text, ScratchFileService.Option.create_new_always);
                                 if (f != null) {
                                     FileEditorManager.getInstance(project).openFile(f, true);
-                                }                            }
+                                }
+                            }
                         });
                     }
                 });
