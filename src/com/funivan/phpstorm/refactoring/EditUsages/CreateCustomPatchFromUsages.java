@@ -6,9 +6,16 @@ import com.intellij.lang.Language;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.progress.Task;
+import com.intellij.openapi.project.DumbModePermission;
+import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VfsUtil;
@@ -17,6 +24,7 @@ import com.intellij.usages.Usage;
 import com.intellij.usages.UsageInfo2UsageAdapter;
 import com.intellij.usages.UsageView;
 import com.intellij.usages.impl.UsageViewImpl;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +51,7 @@ public class CreateCustomPatchFromUsages extends AnAction {
 
         Set<Usage> usages = usageView.getUsages();
 
-        Language language = null;
+
         VirtualFile baseDir = project.getBaseDir();
 
 
@@ -51,57 +59,136 @@ public class CreateCustomPatchFromUsages extends AnAction {
 
         Map<String, Boolean> processedLines = new HashMap<>();
 
-        for (Usage usage : usages) {
 
-            if (!(usage instanceof UsageInfo2UsageAdapter)) {
-                continue;
+        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+            @Override
+            public void run() {
+                DumbService.allowStartingDumbModeInside(DumbModePermission.MAY_START_BACKGROUND, new Runnable() {
+                    @Override
+                    public void run() {
+                        ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                Language language = null;
+
+                                for (Usage usage : usages) {
+
+                                    if (!(usage instanceof UsageInfo2UsageAdapter)) {
+                                        continue;
+                                    }
+
+
+                                    UsageInfo2UsageAdapter usageInfo = (UsageInfo2UsageAdapter) usage;
+
+                                    language = usageInfo.getElement().getLanguage();
+
+
+                                    VirtualFile file = usageInfo.getFile();
+
+                                    int line = usageInfo.getLine();
+                                    String path = VfsUtil.getRelativePath(file, baseDir, '/');
+
+                                    String key = path + ":" + line;
+
+                                    if (processedLines.get(key) != null) {
+                                        continue;
+                                    }
+
+                                    Document fileDocument = FileDocumentManager.getInstance().getDocument(file);
+
+
+                                    int startOffset = fileDocument.getLineStartOffset(line);
+                                    int endOffset = fileDocument.getLineEndOffset(line);
+
+                                    String text = fileDocument.getText(new TextRange(startOffset, endOffset));
+
+                                    buf.append("\n");
+                                    buf.append("//file:" + path + ':' + (line + 1) + "\n");
+                                    buf.append(text + "\n");
+                                    buf.append("\n");
+
+                                    processedLines.put(key, true);
+                                }
+
+                                String text = buf.toString();
+                                if (language != null && language.getID().equals("PHP")) {
+                                    text = "<?php\n" + text;
+                                }
+
+
+                                VirtualFile f = ScratchRootType.getInstance().createScratchFile(project, "scratch", language, text, ScratchFileService.Option.create_new_always);
+                                if (f != null) {
+                                    FileEditorManager.getInstance(project).openFile(f, true);
+                                }                            }
+                        });
+                    }
+                });
             }
+        }, "Create custom patch", "Create custom patch");
 
+//        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+//            @Override
+//            public void run() {
+//                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Language language = null;
+//
+//                        for (Usage usage : usages) {
+//
+//                            if (!(usage instanceof UsageInfo2UsageAdapter)) {
+//                                continue;
+//                            }
+//
+//
+//                            UsageInfo2UsageAdapter usageInfo = (UsageInfo2UsageAdapter) usage;
+//
+//                            language = usageInfo.getElement().getLanguage();
+//
+//
+//                            VirtualFile file = usageInfo.getFile();
+//
+//                            int line = usageInfo.getLine();
+//                            String path = VfsUtil.getRelativePath(file, baseDir, '/');
+//
+//                            String key = path + ":" + line;
+//
+//                            if (processedLines.get(key) != null) {
+//                                continue;
+//                            }
+//
+//                            Document fileDocument = FileDocumentManager.getInstance().getDocument(file);
+//
+//
+//                            int startOffset = fileDocument.getLineStartOffset(line);
+//                            int endOffset = fileDocument.getLineEndOffset(line);
+//
+//                            String text = fileDocument.getText(new TextRange(startOffset, endOffset));
+//
+//                            buf.append("\n");
+//                            buf.append("//file:" + path + ':' + (line + 1) + "\n");
+//                            buf.append(text + "\n");
+//                            buf.append("\n");
+//
+//                            processedLines.put(key, true);
+//                        }
+//
+//                        String text = buf.toString();
+//                        if (language != null && language.getID().equals("PHP")) {
+//                            text = "<?php\n" + text;
+//                        }
+//
+//
+//                        VirtualFile f = ScratchRootType.getInstance().createScratchFile(project, "scratch", language, text, ScratchFileService.Option.create_new_always);
+//                        if (f != null) {
+//                            FileEditorManager.getInstance(project).openFile(f, true);
+//                        }
+//
+//                    }
+//                });
+//            }
+//        }, "Create custom patch", "Create custom patch");
 
-            UsageInfo2UsageAdapter usageInfo = (UsageInfo2UsageAdapter) usage;
-
-            if (language == null) {
-                language = usageInfo.getElement().getLanguage();
-            }
-
-            VirtualFile file = usageInfo.getFile();
-
-            int line = usageInfo.getLine();
-            String path = VfsUtil.getRelativePath(file, baseDir, '/');
-
-            String key = path + ":" + line;
-
-            if (processedLines.get(key) != null) {
-                continue;
-            }
-
-            Document fileDocument = FileDocumentManager.getInstance().getDocument(file);
-
-
-            int startOffset = fileDocument.getLineStartOffset(line);
-            int endOffset = fileDocument.getLineEndOffset(line);
-
-            String text = fileDocument.getText(new TextRange(startOffset, endOffset));
-
-            buf.append("\n");
-            buf.append("//file:" + path + ':' + (line + 1) + "\n");
-            buf.append(text + "\n");
-            buf.append("\n");
-
-            processedLines.put(key, true);
-        }
-
-
-        String text = buf.toString();
-        if (language.getID().equals("PHP")) {
-            text = "<?php\n" + text;
-        }
-
-
-        VirtualFile f = ScratchRootType.getInstance().createScratchFile(project, "scratch", language, text, ScratchFileService.Option.create_new_always);
-        if (f != null) {
-            FileEditorManager.getInstance(project).openFile(f, true);
-        }
 
     }
 

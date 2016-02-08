@@ -12,6 +12,8 @@ import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.project.DumbModePermission;
+import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.ui.popup.Balloon;
@@ -100,51 +102,52 @@ public class ApplyCustomPatch extends AnAction {
 
         }
 
-
         CommandProcessor.getInstance().executeCommand(project, new Runnable() {
             @Override
             public void run() {
-                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                DumbService.allowStartingDumbModeInside(DumbModePermission.MAY_START_BACKGROUND, new Runnable() {
                     @Override
                     public void run() {
-                        int items = 0;
-                        int files = 0;
-                        for (DocumentReplaces doc : documentsForChange.values()) {
+                        ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                int items = 0;
+                                int files = 0;
+                                for (DocumentReplaces doc : documentsForChange.values()) {
 
-                            List<ReplaceStructure> replaces = doc.getReplaces();
+                                    List<ReplaceStructure> replaces = doc.getReplaces();
 
-                            // We need to change elements from the bottom to the top of the document.
-                            // So sort them by start position
-                            Collections.sort(replaces, new ReplacesItemsmComparator());
+                                    // We need to change elements from the bottom to the top of the document.
+                                    // So sort them by start position
+                                    Collections.sort(replaces, new ReplacesItemsmComparator());
 
-                            Document document = doc.getDocument();
+                                    Document document = doc.getDocument();
 
-                            for (ReplaceStructure r : replaces) {
-                                int startOffset = document.getLineStartOffset(r.getLine());
-                                int endOffset = document.getLineEndOffset(r.getLine());
+                                    for (ReplaceStructure r : replaces) {
+                                        int startOffset = document.getLineStartOffset(r.getLine());
+                                        int endOffset = document.getLineEndOffset(r.getLine());
 
-                                document.replaceString(startOffset, endOffset, r.getValue());
-                                items++;
+                                        document.replaceString(startOffset, endOffset, r.getValue());
+                                        items++;
+                                    }
+                                    files++;
+                                }
+
+                                StatusBar statusBar = WindowManager.getInstance().getStatusBar(project);
+                                if (statusBar != null) {
+                                    JBPopupFactory.getInstance()
+                                            .createHtmlTextBalloonBuilder("Processed. Files: " + files + " lines:" + items, MessageType.INFO, null)
+                                            .setFadeoutTime(7500)
+                                            .createBalloon()
+                                            .show(RelativePoint.getCenterOf(statusBar.getComponent()), Balloon.Position.atRight);
+
+                                }
                             }
-                            files++;
-                        }
-
-                        StatusBar statusBar = WindowManager.getInstance().getStatusBar(project);
-                        if (statusBar != null) {
-                            JBPopupFactory.getInstance()
-                                    .createHtmlTextBalloonBuilder("Processed. Files: " + files + " lines:" + items, MessageType.INFO, null)
-                                    .setFadeoutTime(7500)
-                                    .createBalloon()
-                                    .show(RelativePoint.getCenterOf(statusBar.getComponent()), Balloon.Position.atRight);
-
-                        }
-
-
+                        });
                     }
                 });
             }
         }, "Apply custom patch", "Apply custom patch");
-
 
     }
 }
