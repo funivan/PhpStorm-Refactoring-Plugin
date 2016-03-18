@@ -10,3 +10,7 @@
 [EditUsages](src/com/funivan/phpstorm/refactoring/EditUsages/README.md)
 
 [UnimportClass](src/com/funivan/phpstorm/refactoring/UnimportClass/README.md)
+
+[FindMagicMethods](src/com/funivan/phpstorm/refactoring/FindMagicMethods/README.md)
+
+
