@@ -8,3 +8,5 @@
 
 ## Modules
 [EditUsages](src/com/funivan/phpstorm/refactoring/EditUsages/README.md)
+
+[UnimportClass](src/com/funivan/phpstorm/refactoring/UnimportClass/README.md)
