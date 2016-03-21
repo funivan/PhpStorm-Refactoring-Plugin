@@ -1,17 +1,17 @@
 # Find magic methods
 
 ## Why?
-There are two types of magick methods. Static and non-static.
-Whis this cool plugin you can find all magick methods of the target class.
+There are two types of magic methods: static and non-static.
+You can find all magic methods of a target class with this cool plugin.
 
 ## How to use
-1. Navigate to target class
-2. Navigate to one of the method: `__call` or `__callStatic` inside your class
-3. Invoke action `Find magic methods`
+1. Navigate to a target class.
+2. Navigate to one of the methods: `__call` or `__callStatic` inside your class.
+3. Invoke the action `Find magic methods`.
 
 
 ##  Demo:
-Imagine we have following code
+Imagine that we have the following code:
 ```php
 class Namer {
   public function __call($name, $arg){
@@ -27,5 +27,5 @@ $namer->user();
 $namer->test();
 
 ```
-Using action `Find magick method` you will find methods `user`  and `test`
+Using the action `Find magic method`, you will find `user`  and `test` methods.
 
