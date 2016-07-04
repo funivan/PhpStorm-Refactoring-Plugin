@@ -114,7 +114,11 @@ public class UnimportClassIntention extends PsiElementBaseIntentionAction {
                     return;
                 }
 
-                if (!classReference.getFQN().equals(fqn)) {
+                String classFqn = classReference.getFQN();
+                if (classFqn == null) {
+                    return;
+                }
+                if (!classFqn.equals(fqn)) {
                     return;
                 }
 
