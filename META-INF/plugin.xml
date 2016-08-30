@@ -26,7 +26,7 @@
         <!-- Add your extensions here -->
         <intentionAction>
             <className>com.funivan.phpstorm.refactoring.UnimportClass.UnimportClassIntention</className>
-            <category>Php</category>
+            <category>PHP</category>
         </intentionAction>
 
     </extensions>
