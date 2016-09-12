@@ -6,8 +6,8 @@ You can find all magic methods of a target class with this cool plugin.
 
 ## How to use
 1. Navigate to a target class.
-2. Navigate to one of the methods: `__call` or `__callStatic` inside your class.
-3. Invoke the action `Find magic methods`.
+2. Navigate to one of the methods: `__call`, `__callStatic`, `__get`, `__set` inside your class.
+3. Invoke the action `Find magic method call`.
 
 
 ##  Demo:

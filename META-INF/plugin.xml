@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.funivan.phpstorm.refactoring</id>
     <name>Refactoring</name>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <vendor email="dev@yfunivan.com" url="http://funivan.com">Funivan</vendor>
 
     <description><![CDATA[
@@ -10,7 +10,9 @@
     ]]></description>
 
     <change-notes><![CDATA[
-
+        <h4>0.0.2</h4>
+            - [Find magic methods] run task in background
+            - [Find magic methods] Find magic properties
     ]]>
     </change-notes>
 
@@ -42,7 +44,7 @@
     <actions>
         <!-- Add your actions here -->
         <action id="CreatePatchFromUsages" class="com.funivan.phpstorm.refactoring.EditUsages.CreateCustomPatchFromUsages"
-                text="Create custom patch" description="Export Usages to custom patch" icon="Icons.EDIT_USAGES_CREATE_PATCH" >
+                text="Create custom patch" description="Export Usages to custom patch" icon="Icons.EDIT_USAGES_CREATE_PATCH">
             <add-to-group group-id="UsageView.Popup"/>
         </action>
 
@@ -51,12 +53,11 @@
         </action>
 
         <!-- Fins magic methods -->
-        <action id="FindMagicMethod" class="com.funivan.phpstorm.refactoring.FindMagicMethods.FindMagicMethodsAction"
-                text="Find magic method" description="Find magic methods that are passed to this call">
+        <action id="FindMagicMethodCakk" class="com.funivan.phpstorm.refactoring.FindMagicMethods.FindMagicMethodCallAction"
+                text="Find magic method call" description="Find magic method call">
         </action>
 
     </actions>
-
 
 
 </idea-plugin>
