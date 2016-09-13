@@ -10,13 +10,14 @@ import com.jetbrains.php.lang.documentation.phpdoc.psi.PhpDocType;
 import com.jetbrains.php.lang.psi.PhpPsiElementFactory;
 import com.jetbrains.php.lang.psi.elements.ClassReference;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
+import com.jetbrains.php.lang.psi.elements.PhpReference;
 import com.jetbrains.php.lang.psi.elements.PhpUse;
 import com.jetbrains.php.lang.psi.visitors.PhpRecursiveElementVisitor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Created by ivan on 19.01.16.
+ * Created by funivan
  */
 public class UnimportClassIntention extends PsiElementBaseIntentionAction {
 
@@ -56,17 +57,23 @@ public class UnimportClassIntention extends PsiElementBaseIntentionAction {
         }
 
         PsiElement baseElement = element.getParent();
-        if (!(baseElement instanceof ClassReference)) {
+
+        if (!(baseElement instanceof PhpReference)) {
+            return false;
+        }
+        PhpReference ref = (PhpReference) baseElement;
+
+        if (ref.isAbsolute()) {
             return false;
         }
 
-        String fqn = ((ClassReference) baseElement).getFQN();
+        String fqn = ref.getFQN();
 
-        if (fqn.equals(baseElement.getText())) {
+        if (fqn == null) {
             return false;
         }
 
-        return true;
+        return !fqn.equals(baseElement.getText());
     }
 
     /**
@@ -78,14 +85,22 @@ public class UnimportClassIntention extends PsiElementBaseIntentionAction {
      */
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) {
         element = element.getParent();
-        ClassReference classReference = (ClassReference) element;
+        if (!(element instanceof PhpReference)) {
+            return;
+        }
+        PhpReference classReference = (PhpReference) element;
 
         PhpPsiElement scopeForUseOperator = PhpCodeInsightUtil.findScopeForUseOperator(classReference);
 
-        assert scopeForUseOperator != null;
+        if (scopeForUseOperator == null) {
+            return;
+        }
 
 
         String fqn = classReference.getFQN();
+        if (fqn == null) {
+            return;
+        }
         ClassReference newClassRef = PhpPsiElementFactory.createClassReference(project, fqn);
 
 
@@ -99,7 +114,7 @@ public class UnimportClassIntention extends PsiElementBaseIntentionAction {
 
             public void visitPhpDocType(PhpDocType phpDocType) {
 
-                if (phpDocType.isAbsolute() == true) {
+                if (phpDocType.isAbsolute()) {
                     return;
                 }
 
