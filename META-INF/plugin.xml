@@ -10,10 +10,8 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        <h4>[unreleased]</h4>
-            - [Unimport class] invoke action inside php doc comments
-
         <h4>0.0.2</h4>
+            - [Unimport class] invoke action inside php doc comments
             - [Find magic methods] run task in background
             - [Find magic methods] Find magic properties
     ]]>
