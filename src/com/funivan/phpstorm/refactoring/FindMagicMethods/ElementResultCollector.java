@@ -10,13 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by ivan
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 public class ElementResultCollector {
     private final HashMap<String, PhpClass> searchClassFQN;
     private final List<Usage> usages;
 
-    public ElementResultCollector(HashMap<String, PhpClass> searchClassFQN, List<Usage> usages) {
+    ElementResultCollector(HashMap<String, PhpClass> searchClassFQN, List<Usage> usages) {
         this.searchClassFQN = searchClassFQN;
         this.usages = usages;
     }

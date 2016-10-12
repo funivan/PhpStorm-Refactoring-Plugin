@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 /**
- * Created by ivan on 20.01.16.
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 public class FindMagicMethodCallAction extends AnAction {
     @Override
@@ -72,6 +72,9 @@ public class FindMagicMethodCallAction extends AnAction {
 
         final String targetName = findTarget.getName();
 
+        if (targetName == null) {
+            return;
+        }
 
         PsiElement findTargetElement = ((PsiElementUsageTarget) findTarget).getElement();
         PhpPsiElement scopeForUseOperator = PhpCodeInsightUtil.findScopeForUseOperator(findTargetElement);
@@ -85,14 +88,14 @@ public class FindMagicMethodCallAction extends AnAction {
         BaseElementVisitor visitor = null;
 
 
-        boolean isCall = targetName.equals("__call") == true;
-        boolean isCallStatic = targetName.equals("__callStatic") == true;
+        boolean isCall = targetName.equals("__call");
+        boolean isCallStatic = targetName.equals("__callStatic");
         if (isCall || isCallStatic) {
             visitor = new MethodReferenceVisitor(isCallStatic);
         }
 
-        boolean isGet = targetName.equals("__get") == true;
-        boolean isSet = targetName.equals("__set") == true;
+        boolean isGet = targetName.equals("__get");
+        boolean isSet = targetName.equals("__set");
 
         if (isGet || isSet) {
             visitor = new FieldReferenceVisitor(isSet);
@@ -116,13 +119,7 @@ public class FindMagicMethodCallAction extends AnAction {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
 
-//                ApplicationManager.getApplication().executeOnPooledThread(new Runnable() {
-//                    public void run() {
 
-
-                if (elementVisitor == null) {
-                    return;
-                }
                 ApplicationManager.getApplication().runReadAction(new Runnable() {
 
                     @Override
@@ -141,7 +138,7 @@ public class FindMagicMethodCallAction extends AnAction {
                         for (PhpClass el : subClasses) {
                             Method classMethod = PhpIndexUtil.getClassMethod(el, targetName);
 
-                            if (classMethod == null) {
+                            if (classMethod == null || classMethod.getContainingClass() == null) {
                                 continue;
                             }
 
@@ -171,12 +168,12 @@ public class FindMagicMethodCallAction extends AnAction {
                                 //#   find usages inside this files
                                 PsiFile containingFile = classUsage.getElement().getContainingFile();
                                 VirtualFile file = containingFile.getVirtualFile();
-//
-//
+
+
                                 String path = VfsUtil.getRelativePath(file, baseDir, '/');
-//                              if (processedFiles.get(path) != null) {
-//                                  continue;
-//                              }
+                                if (processedFiles.get(path) != null) {
+                                    continue;
+                                }
 
                                 processedFiles.put(path, true);
                                 containingFile.acceptChildren(elementVisitor);
@@ -188,8 +185,6 @@ public class FindMagicMethodCallAction extends AnAction {
                     }
 
                 });
-//                    }
-//                });
 
             }
 

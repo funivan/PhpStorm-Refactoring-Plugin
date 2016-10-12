@@ -1,7 +1,7 @@
 package com.funivan.phpstorm.refactoring.FindMagicMethods;
 
 /**
- * Created by ivan
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 public interface MagicElementVisitor {
 

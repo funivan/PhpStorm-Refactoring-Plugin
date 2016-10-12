@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 
 /**
- * Created by ivan on 27.01.16.
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 public class PhpIndexUtil {
 

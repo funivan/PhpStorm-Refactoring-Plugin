@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by funivan
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 public class UnimportClassIntention extends PsiElementBaseIntentionAction {
 

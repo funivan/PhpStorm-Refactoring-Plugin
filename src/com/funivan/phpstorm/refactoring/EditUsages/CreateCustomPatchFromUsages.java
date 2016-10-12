@@ -135,68 +135,6 @@ public class CreateCustomPatchFromUsages extends AnAction {
             }
         }, "Create custom patch", "Create custom patch");
 
-//        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
-//            @Override
-//            public void run() {
-//                ApplicationManager.getApplication().runWriteAction(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Language language = null;
-//
-//                        for (Usage usage : usages) {
-//
-//                            if (!(usage instanceof UsageInfo2UsageAdapter)) {
-//                                continue;
-//                            }
-//
-//
-//                            UsageInfo2UsageAdapter usageInfo = (UsageInfo2UsageAdapter) usage;
-//
-//                            language = usageInfo.getElement().getLanguage();
-//
-//
-//                            VirtualFile file = usageInfo.getFile();
-//
-//                            int line = usageInfo.getLine();
-//                            String path = VfsUtil.getRelativePath(file, baseDir, '/');
-//
-//                            String key = path + ":" + line;
-//
-//                            if (processedLines.get(key) != null) {
-//                                continue;
-//                            }
-//
-//                            Document fileDocument = FileDocumentManager.getInstance().getDocument(file);
-//
-//
-//                            int startOffset = fileDocument.getLineStartOffset(line);
-//                            int endOffset = fileDocument.getLineEndOffset(line);
-//
-//                            String text = fileDocument.getText(new TextRange(startOffset, endOffset));
-//
-//                            buf.append("\n");
-//                            buf.append("//file:" + path + ':' + (line + 1) + "\n");
-//                            buf.append(text + "\n");
-//                            buf.append("\n");
-//
-//                            processedLines.put(key, true);
-//                        }
-//
-//                        String text = buf.toString();
-//                        if (language != null && language.getID().equals("PHP")) {
-//                            text = "<?php\n" + text;
-//                        }
-//
-//
-//                        VirtualFile f = ScratchRootType.getInstance().createScratchFile(project, "scratch", language, text, ScratchFileService.Option.create_new_always);
-//                        if (f != null) {
-//                            FileEditorManager.getInstance(project).openFile(f, true);
-//                        }
-//
-//                    }
-//                });
-//            }
-//        }, "Create custom patch", "Create custom patch");
 
 
     }

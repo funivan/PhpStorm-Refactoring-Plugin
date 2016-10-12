@@ -5,9 +5,10 @@ import com.intellij.openapi.util.IconLoader;
 import javax.swing.*;
 
 /**
- * Created by ivan on 08.02.16.
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 public class EditUsagesIcons {
+
     /**
      * Author Valera Zvonko
      */

@@ -9,7 +9,7 @@ import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import java.util.Set;
 
 /**
- * Created by ivan on 22.01.16.
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 
 public class FieldReferenceVisitor extends BaseElementVisitor {
@@ -33,7 +33,7 @@ public class FieldReferenceVisitor extends BaseElementVisitor {
     }
 
 
-    public void visitFieldReference(FieldReference element) {
+    private void visitFieldReference(FieldReference element) {
         PsiElement resolve = element.resolve();
         System.out.println(element.getName());
 //
@@ -53,7 +53,7 @@ public class FieldReferenceVisitor extends BaseElementVisitor {
 
         PhpType type = classReference.getType().global(element.getProject());
         Set<String> types = type.getTypes();
-        if (types == null || types.size() != 1) {
+        if (types.size() != 1) {
             return;
         }
 

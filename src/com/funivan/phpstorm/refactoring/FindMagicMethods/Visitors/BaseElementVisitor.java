@@ -5,7 +5,7 @@ import com.funivan.phpstorm.refactoring.FindMagicMethods.MagicElementVisitor;
 import com.intellij.psi.PsiRecursiveElementWalkingVisitor;
 
 /**
- * Created by ivan
+ * @author Ivan Scherbak <dev@funivan.com>
  */
 abstract public class BaseElementVisitor extends PsiRecursiveElementWalkingVisitor implements MagicElementVisitor {
     private ElementResultCollector filter;

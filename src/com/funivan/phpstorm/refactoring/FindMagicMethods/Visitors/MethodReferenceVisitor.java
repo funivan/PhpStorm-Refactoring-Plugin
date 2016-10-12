@@ -6,9 +6,8 @@ import com.jetbrains.php.lang.psi.elements.MethodReference;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 
 /**
- * Created by ivan on 22.01.16.
+ * @author Ivan Scherbak <dev@funivan.com>
  */
-
 public class MethodReferenceVisitor extends BaseElementVisitor {
 
 
@@ -34,10 +33,6 @@ public class MethodReferenceVisitor extends BaseElementVisitor {
             }
 
             PhpType type = ((MethodReference) element).getType();
-
-            if (type == null) {
-                return;
-            }
 
             //@todo get method type
             String classFqn = type.toString().replaceAll("^#M#C(.+)\\." + ((MethodReference) element).getName() + ".+$", "$1");
