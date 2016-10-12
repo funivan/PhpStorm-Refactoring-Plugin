@@ -46,7 +46,7 @@ public class CreateCustomPatchFromUsages extends AnAction {
         }
 
         Set<Usage> usages = usageView.getSelectedUsages();
-        if (usages.size() == 0) {
+        if (usages == null || usages.size() == 0) {
             usages = usageView.getUsages();
         }
 
@@ -81,7 +81,7 @@ public class CreateCustomPatchFromUsages extends AnAction {
 
                                     UsageInfo2UsageAdapter usageInfo = (UsageInfo2UsageAdapter) usage;
 
-                                    if (usageInfo == null || usageInfo.getElement() == null) {
+                                    if (usageInfo.getElement() == null) {
                                         continue;
                                     }
                                     language = usageInfo.getElement().getLanguage();
@@ -100,16 +100,20 @@ public class CreateCustomPatchFromUsages extends AnAction {
 
                                     Document fileDocument = FileDocumentManager.getInstance().getDocument(file);
 
-
+                                    if (fileDocument == null) {
+                                        continue;
+                                    }
                                     int startOffset = fileDocument.getLineStartOffset(line);
                                     int endOffset = fileDocument.getLineEndOffset(line);
 
                                     String text = fileDocument.getText(new TextRange(startOffset, endOffset));
 
+
                                     buf.append("\n");
-                                    buf.append("//file:" + path + ':' + (line + 1) + "\n");
-                                    buf.append(text + "\n");
+                                    buf.append("//file:").append(path).append(':').append(line + 1).append("\n");
+                                    buf.append(text).append("\n");
                                     buf.append("\n");
+
 
                                     processedLines.put(key, true);
                                 }
