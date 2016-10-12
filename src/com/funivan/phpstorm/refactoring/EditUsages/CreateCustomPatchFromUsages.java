@@ -81,6 +81,9 @@ public class CreateCustomPatchFromUsages extends AnAction {
 
                                     UsageInfo2UsageAdapter usageInfo = (UsageInfo2UsageAdapter) usage;
 
+                                    if (usageInfo == null || usageInfo.getElement() == null) {
+                                        continue;
+                                    }
                                     language = usageInfo.getElement().getLanguage();
 
 
