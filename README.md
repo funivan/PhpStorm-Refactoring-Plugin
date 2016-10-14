@@ -1,16 +1,8 @@
 # Refactoring plugin for PhpStorm
 
-# How to install?
-1. Download the latest version from [github](https://github.com/funivan/PhpStorm-Refactoring-Plugin/releases).
-2. Invoke the action in PHPStorm `Install plugin from disk`.
-3. Restart PHPstorm.
-
-
 ## Modules
-[EditUsages](src/com/funivan/phpstorm/refactoring/EditUsages/README.md)
+[EditUsages](src/com/funivan/phpstorm/refactoring/EditUsages/README.md) - find some statements with PhpStorm and edit it.
 
-[UnimportClass](src/com/funivan/phpstorm/refactoring/UnimportClass/README.md)
+[UnimportClass](src/com/funivan/phpstorm/refactoring/UnimportClass/README.md) - revers action of the import class 
 
-[FindMagicMethods](src/com/funivan/phpstorm/refactoring/FindMagicMethods/README.md)
-
-
+[FindMagicMethods](src/com/funivan/phpstorm/refactoring/FindMagicMethods/README.md) - detect who is calling your magic methods

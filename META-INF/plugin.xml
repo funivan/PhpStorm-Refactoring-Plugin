@@ -1,24 +1,40 @@
 <idea-plugin version="2">
     <id>com.funivan.phpstorm.refactoring</id>
     <name>Refactoring</name>
-    <version>0.0.4</version>
-    <vendor email="dev@yfunivan.com" url="http://funivan.com">Funivan</vendor>
+    <version>0.0.5</version>
+    <vendor email="dev@funivan.com" url="http://funivan.com">Funivan</vendor>
 
     <description><![CDATA[
-      Improve your productivity
+        Improve your productivity.<br><br>
+        <b>Edit usages</b> - find some statements with PhpStorm and edit it.<br>
+        <b>Find magic method</b> - detect who is calling your magic methods<br>
+        <b>Unimport class</b> - revers action of the import class<br>
+
+        <br><hr>
+        Support<br>
+        <a href="https://github.com/funivan/PhpStorm-Refactoring-Plugin/blob/master/README.md#modules">How to use</a><br>
+        GitHub : <a href="https://github.com/funivan/PhpStorm-Refactoring-Plugin">funivan/PhpStorm-Refactoring-Plugin</a>
+        <br>
+        Have some question?<br>
+        Twitter: <a href="http://twitter.com/funivan">@funivan</a>
+
+
     ]]></description>
 
     <change-notes><![CDATA[
+        <h4>0.0.5</h4>
+            - Rewrite plugin description. Fix typos
+
         <h4>0.0.4</h4>
-            - Fix null pointers. Optimize code
+            - Fix null pointers. Optimize code<br>
 
         <h4>0.0.3</h4>
-            - [Unimport class] Add support for the class alias. Can be invoked on the use statement
+            - [Unimport class] Add support for the class alias. Can be invoked on the use statement<br>
 
         <h4>0.0.2</h4>
-            - [Unimport class] invoke action inside php doc comments
-            - [Find magic methods] run task in background
-            - [Find magic methods] Find magic properties
+            - [Unimport class] invoke action inside php doc comments<br>
+            - [Find magic methods] run task in background<br>
+            - [Find magic methods] Find magic properties<br>
     ]]>
     </change-notes>
 
