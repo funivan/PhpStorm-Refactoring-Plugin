@@ -8,6 +8,6 @@ Revers action of the import class
 
 ## Action: Find magic method call
 Detect who is calling your magic methods
-[FindMagicMethods](src/com/funivan/phpstorm/refactoring/FindMagicMethods/README.md)
+[FindMagicMethods](src/com/funivan/phpstorm/refactoring/findMagicMethods/README.md)
 
 ![FindMagicMethods](doc/find-magick-methods.gif)
