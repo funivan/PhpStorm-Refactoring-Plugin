@@ -1,12 +1,11 @@
-<idea-plugin version="2">
+<idea-plugin>
     <id>com.funivan.phpstorm.refactoring</id>
     <name>Refactoring</name>
-    <version>0.0.5</version>
-    <vendor email="dev@funivan.com" url="http://funivan.com">Funivan</vendor>
+    <version>0.1.0</version>
+    <vendor email="alotofall@gmail.com" url="http://funivan.com">Ivan Shcherbak</vendor>
 
     <description><![CDATA[
         Improve your productivity.<br><br>
-        <b>Edit usages</b> - find some statements with PhpStorm and edit it.<br>
         <b>Find magic method</b> - detect who is calling your magic methods<br>
         <b>Unimport class</b> - revers action of the import class<br>
 
@@ -22,6 +21,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <h4>0.1.0</h4>
+            - fix typos
+            - Moved EditUsages to external plugin https://plugins.jetbrains.com/plugin/10274-editusages
+
         <h4>0.0.5</h4>
             - Rewrite plugin description. Fix typos
 
@@ -64,19 +67,11 @@
     </project-components>
 
     <actions>
-        <!-- Add your actions here -->
-        <action id="CreatePatchFromUsages" class="com.funivan.phpstorm.refactoring.EditUsages.CreateCustomPatchFromUsages"
-                text="Create custom patch" description="Export Usages to custom patch" icon="Icons.EDIT_USAGES_CREATE_PATCH">
-            <add-to-group group-id="UsageView.Popup"/>
-        </action>
-
-        <action id="ApplyCustomPatch" class="com.funivan.phpstorm.refactoring.EditUsages.ApplyCustomPatch"
-                text="Apply custom patch" description="Apply custom patch file">
-        </action>
-
         <!-- Fins magic methods -->
-        <action id="FindMagicMethodCakk" class="com.funivan.phpstorm.refactoring.FindMagicMethods.FindMagicMethodCallAction"
-                text="Find magic method call" description="Find magic method call">
+        <action id="FindMagicMethodCall"
+                class="com.funivan.phpstorm.refactoring.FindMagicMethods.FindMagicMethodCallAction"
+                text="Find magic method call"
+                description="Find magic method call">
         </action>
 
     </actions>

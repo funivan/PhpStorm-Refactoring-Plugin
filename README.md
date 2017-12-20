@@ -1,8 +1,13 @@
 # Refactoring plugin for PhpStorm
 
-## Modules
-[EditUsages](src/com/funivan/phpstorm/refactoring/EditUsages/README.md) - find some statements with PhpStorm and edit it.
+## Intention: Unimport class 
+Revers action of the import class
+[UnimportClass](src/com/funivan/phpstorm/refactoring/UnimportClass/README.md)
 
-[UnimportClass](src/com/funivan/phpstorm/refactoring/UnimportClass/README.md) - revers action of the import class 
+![Unimport class](doc/unimport.gif) 
 
-[FindMagicMethods](src/com/funivan/phpstorm/refactoring/FindMagicMethods/README.md) - detect who is calling your magic methods
+## Action: Find magic method call
+Detect who is calling your magic methods
+[FindMagicMethods](src/com/funivan/phpstorm/refactoring/FindMagicMethods/README.md)
+
+![FindMagicMethods](doc/find-magick-methods.gif)

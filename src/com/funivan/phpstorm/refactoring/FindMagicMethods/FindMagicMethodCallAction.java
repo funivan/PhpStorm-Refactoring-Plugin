@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 /**
- * @author Ivan Scherbak <dev@funivan.com>
+ * @author Ivan Shcherbak <alotofall@gmail.com>
  */
 public class FindMagicMethodCallAction extends AnAction {
     @Override
@@ -119,9 +119,7 @@ public class FindMagicMethodCallAction extends AnAction {
             @Override
             public void run(@NotNull ProgressIndicator indicator) {
 
-
                 ApplicationManager.getApplication().runReadAction(new Runnable() {
-
                     @Override
                     public void run() {
 

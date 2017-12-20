@@ -7,14 +7,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 
 /**
- * @author Ivan Scherbak <dev@funivan.com>
+ * @author Ivan Shcherbak <alotofall@gmail.com>
  */
 public class PhpIndexUtil {
 
     @Nullable
     public static Method getClassMethod(PhpClass phpClass, String methodName) {
         Collection<Method> classMethods = phpClass.getMethods();
-
         for (Method m : classMethods) {
             if (m.getName().equals(methodName)) {
                 return m;

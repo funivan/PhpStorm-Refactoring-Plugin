@@ -6,10 +6,9 @@ import com.jetbrains.php.lang.psi.elements.MethodReference;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 
 /**
- * @author Ivan Scherbak <dev@funivan.com>
+ * @author Ivan Shcherbak <alotofall@gmail.com>
  */
 public class MethodReferenceVisitor extends BaseElementVisitor {
-
 
     private final Boolean findStaticMethods;
 
@@ -19,10 +18,8 @@ public class MethodReferenceVisitor extends BaseElementVisitor {
 
     @Override
     public void visitElement(PsiElement element) {
-
         if (element instanceof MethodReference) {
             PsiElement resolve = ((MethodReference) element).resolve();
-
             if ((resolve instanceof Method)) {
                 // Our method cant be resolved and that`s why it is magic)
                 return;
@@ -31,17 +28,12 @@ public class MethodReferenceVisitor extends BaseElementVisitor {
             if ((findStaticMethods && !((MethodReference) element).isStatic()) || (!findStaticMethods && ((MethodReference) element).isStatic())) {
                 return;
             }
-
             PhpType type = ((MethodReference) element).getType();
-
             //@todo get method type
             String classFqn = type.toString().replaceAll("^#M#C(.+)\\." + ((MethodReference) element).getName() + ".+$", "$1");
             getResultCollector().add(element, classFqn);
-
         }
-
         super.visitElement(element);
-
     }
 
 }

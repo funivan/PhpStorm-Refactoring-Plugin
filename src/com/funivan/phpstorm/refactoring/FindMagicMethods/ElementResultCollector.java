@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Ivan Scherbak <dev@funivan.com>
+ * @author Ivan Shcherbak <alotofall@gmail.com>
  */
 public class ElementResultCollector {
     private final HashMap<String, PhpClass> searchClassFQN;
@@ -22,7 +22,6 @@ public class ElementResultCollector {
     }
 
     public void add(PsiElement element, String classFqn) {
-
         if (searchClassFQN.get(classFqn) == null) {
             return;
         }

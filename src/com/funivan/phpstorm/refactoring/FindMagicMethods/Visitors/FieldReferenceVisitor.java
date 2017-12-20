@@ -9,11 +9,10 @@ import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import java.util.Set;
 
 /**
- * @author Ivan Scherbak <dev@funivan.com>
+ * @author Ivan Shcherbak <alotofall@gmail.com>
  */
 
 public class FieldReferenceVisitor extends BaseElementVisitor {
-
 
     private final Boolean writeAccess;
 
@@ -35,13 +34,9 @@ public class FieldReferenceVisitor extends BaseElementVisitor {
 
     private void visitFieldReference(FieldReference element) {
         PsiElement resolve = element.resolve();
-        System.out.println(element.getName());
-//
         if (resolve != null) {
-            // Our method cant be resolved and that`s why it is magic)
             return;
         }
-
         if (element.isWriteAccess() != writeAccess) {
             return;
         }
@@ -50,13 +45,11 @@ public class FieldReferenceVisitor extends BaseElementVisitor {
         if (!(classReference instanceof PhpReference) || ((PhpReference) classReference).multiResolve(false).length <= 0) {
             return;
         }
-
         PhpType type = classReference.getType().global(element.getProject());
         Set<String> types = type.getTypes();
         if (types.size() != 1) {
             return;
         }
-
         String typeFqn = types.iterator().next();
         getResultCollector().add(element, typeFqn);
     }
