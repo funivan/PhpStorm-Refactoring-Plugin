@@ -8,38 +8,27 @@ import com.jetbrains.php.lang.psi.elements.PhpReference
  * @author Ivan Shcherbak alotofall@gmail.com>
  */
 
-class FieldReferenceVisitor(private val writeAccess: Boolean?) : BaseElementVisitor() {
+class FieldReferenceVisitor(private val writeAccess: Boolean) : BaseElementVisitor() {
 
     override fun visitElement(element: PsiElement?) {
         if (element is FieldReference) {
-            visitFieldReference((element as FieldReference?)!!)
+            if (element.resolve() == null) {
+                if (element.isWriteAccess == writeAccess) {
+                    val classReference = element.classReference
+                    if (classReference is PhpReference && !classReference.multiResolve(false).isEmpty()) {
+                        val type = classReference.type.global(element.project)
+                        val types = type.types
+                        if (types.size == 1) {
+                            collector.add(
+                                    element,
+                                    types.iterator().next()
+                            )
+                        }
+                    }
+                }
+            }
         }
         super.visitElement(element)
-    }
-
-
-    private fun visitFieldReference(element: FieldReference) {
-        val resolve = element.resolve()
-        if (resolve != null) {
-            return
-        }
-        if (element.isWriteAccess != writeAccess) {
-            return
-        }
-        val classReference = element.classReference
-
-        if (classReference !is PhpReference || classReference.multiResolve(false).isEmpty()) {
-            return
-        }
-        val type = classReference.type.global(element.project)
-        val types = type.types
-        if (types.size != 1) {
-            return
-        }
-        collector.add(
-                element,
-                types.iterator().next()
-        )
     }
 
 }

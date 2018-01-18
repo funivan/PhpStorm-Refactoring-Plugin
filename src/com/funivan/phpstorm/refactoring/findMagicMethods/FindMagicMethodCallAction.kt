@@ -1,6 +1,5 @@
 package com.funivan.phpstorm.refactoring.findMagicMethods
 
-import com.funivan.phpstorm.refactoring.findMagicMethods.Visitors.BaseElementVisitor
 import com.funivan.phpstorm.refactoring.findMagicMethods.Visitors.FieldReferenceVisitor
 import com.funivan.phpstorm.refactoring.findMagicMethods.Visitors.MethodReferenceVisitor
 import com.funivan.phpstorm.refactoring.findMagicMethods.results.ResultCollector
@@ -17,9 +16,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.usages.*
 import com.jetbrains.php.PhpIndex
-import com.jetbrains.php.codeInsight.PhpCodeInsightUtil
 import com.jetbrains.php.lang.psi.elements.PhpClass
-
 import java.util.*
 
 /**
@@ -44,30 +41,22 @@ class FindMagicMethodCallAction : AnAction() {
             return
         }
 
-        var visitor: BaseElementVisitor? = null
-
-
-        val isCall = targetName == "__call"
-        val isCallStatic = targetName == "__callStatic"
-        if (isCall || isCallStatic) {
-            visitor = MethodReferenceVisitor(isCallStatic)
+        // Find all subclasses
+        val visitor = when (targetName) {
+            "__call" -> MethodReferenceVisitor(false)
+            "__callStatic" -> MethodReferenceVisitor(true)
+            "__get" -> FieldReferenceVisitor(false)
+            "__set" -> FieldReferenceVisitor(true)
+            else -> {
+                return;
+            }
         }
-        val isGet = targetName == "__get"
-        val isSet = targetName == "__set"
-        if (isGet || isSet) {
-            visitor = FieldReferenceVisitor(isSet)
-        }
-        if (visitor == null) {
-            return
-        }
-
 
         val usages = ArrayList<Usage>()
         val phpClass = findTargetElement.context
         if (phpClass !is PhpClass) {
             return
         }
-        val elementVisitor = visitor
 
         object : Task.Backgroundable(project, "Find magic method call: " + targetName, true) {
             override fun run(indicator: ProgressIndicator) {
@@ -96,7 +85,7 @@ class FindMagicMethodCallAction : AnAction() {
                     val processedFiles = HashMap<String, Boolean>()
                     val baseDir = project.baseDir
                     val projectScope = GlobalSearchScope.projectScope(project)
-                    elementVisitor.collector = ResultCollector(searchForClassesFQNs, usages)
+                    visitor.collector = ResultCollector(searchForClassesFQNs, usages)
 
 
                     for (target in searchForClassesFQNs.values) {
@@ -113,7 +102,7 @@ class FindMagicMethodCallAction : AnAction() {
                             val path = VfsUtil.getRelativePath(file, baseDir, '/')
                             if (path != null && processedFiles[path] == null) {
                                 processedFiles.put(path, true)
-                                containingFile.acceptChildren(elementVisitor)
+                                containingFile.acceptChildren(visitor)
                             }
                         }
 
