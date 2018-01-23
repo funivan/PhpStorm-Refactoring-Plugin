@@ -14,7 +14,7 @@ import com.jetbrains.php.lang.psi.elements.impl.PhpUseImpl
 import java.util.*
 
 /**
- * @author Ivan Shcherbak alotofall@gmail.com>
+ * @author Ivan Shcherbak alotofall@gmail.com
  */
 class UnimportClassIntention : PsiElementBaseIntentionAction() {
 

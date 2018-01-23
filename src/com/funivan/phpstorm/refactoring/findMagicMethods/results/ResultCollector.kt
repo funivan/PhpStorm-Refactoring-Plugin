@@ -8,7 +8,7 @@ import com.jetbrains.php.lang.psi.elements.PhpClass
 import java.util.*
 
 /**
- * @author Ivan Shcherbak alotofall@gmail.com>
+ * @author Ivan Shcherbak alotofall@gmail.com
  */
 class ResultCollector internal constructor(
         private val searchClassFQN: HashMap<String, PhpClass>,

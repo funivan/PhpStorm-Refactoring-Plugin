@@ -5,7 +5,7 @@ import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.elements.MethodReference
 
 /**
- * @author Ivan Shcherbak alotofall@gmail.com>
+ * @author Ivan Shcherbak alotofall@gmail.com
  */
 class MethodReferenceVisitor(private val findStaticMethods: Boolean) : BaseElementVisitor() {
 

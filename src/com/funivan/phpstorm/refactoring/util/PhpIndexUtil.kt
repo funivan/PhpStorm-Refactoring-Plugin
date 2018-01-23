@@ -4,7 +4,7 @@ import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.elements.PhpClass
 
 /**
- * @author Ivan Shcherbak alotofall@gmail.com>
+ * @author Ivan Shcherbak alotofall@gmail.com
  */
 object PhpIndexUtil {
 

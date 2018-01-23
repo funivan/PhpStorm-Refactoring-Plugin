@@ -5,7 +5,7 @@ import com.jetbrains.php.lang.psi.elements.FieldReference
 import com.jetbrains.php.lang.psi.elements.PhpReference
 
 /**
- * @author Ivan Shcherbak alotofall@gmail.com>
+ * @author Ivan Shcherbak alotofall@gmail.com
  */
 
 class FieldReferenceVisitor(private val writeAccess: Boolean) : BaseElementVisitor() {

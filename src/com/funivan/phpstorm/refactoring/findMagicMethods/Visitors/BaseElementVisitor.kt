@@ -6,7 +6,7 @@ import com.funivan.phpstorm.refactoring.findMagicMethods.results.NullableResultC
 import com.intellij.psi.PsiRecursiveElementWalkingVisitor
 
 /**
- * @author Ivan Shcherbak alotofall@gmail.com>
+ * @author Ivan Shcherbak alotofall@gmail.com
  */
 abstract class BaseElementVisitor : PsiRecursiveElementWalkingVisitor(), MagicElementVisitor {
     override var collector: ResultCollectorInterface = NullableResultCollector()
