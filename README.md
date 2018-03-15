@@ -2,7 +2,7 @@
 
 ## Intention: Unimport class 
 Revers action of the import class
-[UnimportClass](src/com/funivan/phpstorm/refactoring/UnimportClass/README.md)
+[UnimportClass](src/com/funivan/phpstorm/refactoring/unimportClass/README.md)
 
 ![Unimport class](doc/unimport.gif) 
 

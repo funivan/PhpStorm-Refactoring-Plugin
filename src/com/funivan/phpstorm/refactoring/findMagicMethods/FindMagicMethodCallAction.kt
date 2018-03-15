@@ -30,10 +30,7 @@ class FindMagicMethodCallAction : AnAction() {
 
         PsiDocumentManager.getInstance(project).commitAllDocuments()
         val usageTargets = anActionEvent.getData(UsageView.USAGE_TARGETS_KEY) ?: return
-
         val findTarget = (usageTargets[0] ?: return) as? PsiElementUsageTarget ?: return
-
-
         val targetName = findTarget.name ?: return
 
         val findTargetElement = findTarget.element
@@ -101,15 +98,12 @@ class FindMagicMethodCallAction : AnAction() {
 
                             val path = VfsUtil.getRelativePath(file, baseDir, '/')
                             if (path != null && processedFiles[path] == null) {
-                                processedFiles.put(path, true)
+                                processedFiles[path] = true
                                 containingFile.acceptChildren(visitor)
                             }
                         }
-
-
                     }
                 }
-
             }
 
             override fun onCancel() {
@@ -133,8 +127,6 @@ class FindMagicMethodCallAction : AnAction() {
                 usages.clear()
             }
         }.queue()
-
-
     }
 
 

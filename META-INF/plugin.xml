@@ -52,7 +52,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <intentionAction>
-            <className>com.funivan.phpstorm.refactoring.UnimportClass.UnimportClassIntention</className>
+            <className>com.funivan.phpstorm.refactoring.unimportClass.UnimportClassIntention</className>
             <category>PHP</category>
         </intentionAction>
 
