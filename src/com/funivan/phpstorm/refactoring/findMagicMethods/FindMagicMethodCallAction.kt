@@ -45,7 +45,7 @@ class FindMagicMethodCallAction : AnAction() {
             "__get" -> FieldReferenceVisitor(false)
             "__set" -> FieldReferenceVisitor(true)
             else -> {
-                return;
+                return
             }
         }
 
@@ -55,7 +55,7 @@ class FindMagicMethodCallAction : AnAction() {
             return
         }
 
-        object : Task.Backgroundable(project, "Find magic method call: " + targetName, true) {
+        object : Task.Backgroundable(project, "Find magic method call: $targetName", true) {
             override fun run(indicator: ProgressIndicator) {
                 ApplicationManager.getApplication().runReadAction {
                     val searchForClassesFQNs = HashMap<String, PhpClass>()
@@ -115,7 +115,7 @@ class FindMagicMethodCallAction : AnAction() {
                 super.onSuccess()
                 //@todo show bubble: empty usages
                 val usageViewPresentation = UsageViewPresentation()
-                usageViewPresentation.tabText = "magic methods " + targetName
+                usageViewPresentation.tabText = "Magic methods $targetName"
                 UsageViewManager
                         .getInstance(project)
                         .showUsages(
