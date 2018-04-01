@@ -74,6 +74,12 @@
                 description="Find magic method call">
         </action>
 
+        <action
+                id="SmartCopy"
+                class="com.funivan.phpstorm.refactoring.smartCopy.SmartCopyActionIntention"
+                text="Smart copy"
+                description="Copy php code with references"
+        ></action>
     </actions>
 
 
