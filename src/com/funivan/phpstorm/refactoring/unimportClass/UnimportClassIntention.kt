@@ -36,9 +36,7 @@ class UnimportClassIntention : PsiElementBaseIntentionAction() {
         val baseElement = element.parent as? ClassReference ?: return false
 
         val fqn = baseElement.fqn
-
-        return fqn != baseElement.text
-
+        return fqn != baseElement.text || baseElement.parent is PhpUse
     }
 
     override fun invoke(project: Project, editor: Editor, element: PsiElement) {

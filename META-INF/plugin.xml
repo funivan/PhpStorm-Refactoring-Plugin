@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.funivan.phpstorm.refactoring</id>
     <name>Refactoring</name>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <vendor email="alotofall@gmail.com" url="http://funivan.com">Ivan Shcherbak</vendor>
 
     <description><![CDATA[
@@ -21,6 +21,9 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <h4>0.1.1</h4>
+            - Invoke `UnimportClass` intention on the use statement
+
         <h4>0.1.0</h4>
             - fix typos
             - Moved EditUsages to external plugin https://plugins.jetbrains.com/plugin/10274-editusages
